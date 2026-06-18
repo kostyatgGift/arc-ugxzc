@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ApexNet — Современный мессенджер</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <!-- Auth Screen -->
+  <div id="authScreen" class="screen active">
+    <div class="auth-container">
+      <div class="auth-card">
+        <div class="logo">ApexNet</div>
+        <div class="tagline">Твой мир онлайн</div>
+        
+        <div id="loginForm" class="auth-form active">
+          <h2>Вход</h2>
+          <input type="text" id="loginUsername" placeholder="Имя пользователя" autocomplete="username">
+          <input type="password" id="loginPassword" placeholder="Пароль" autocomplete="current-password">
+          <button onclick="login()" class="btn-primary">Войти</button>
+          <div class="switch-link">Нет аккаунта? <a onclick="showRegister()">Регистрация</a></div>
+        </div>
+        
+        <div id="registerForm" class="auth-form">
+          <h2>Регистрация</h2>
+          <input type="text" id="regName" placeholder="Имя" autocomplete="name">
+          <input type="text" id="regUsername" placeholder="Имя пользователя" autocomplete="username">
+          <input type="password" id="regPassword" placeholder="Пароль" autocomplete="new-password">
+          <button onclick="register()" class="btn-primary">Создать аккаунт</button>
+          <div class="switch-link">Есть аккаунт? <a onclick="showLogin()">Войти</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Screen -->
+  <div id="mainScreen" class="screen">
+    <div class="layout">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <div class="logo-small">ApexNet</div>
+          <button onclick="showSettings()" class="icon-btn">⚙️</button>
+        </div>
+        
+        <div class="search-box">
+          <input type="text" id="searchInput" placeholder="Поиск" oninput="searchChats()">
+        </div>
+        
+        <div class="chat-list" id="chatList"></div>
+        
+        <div class="sidebar-footer">
+          <button onclick="showNewChat()" class="btn-new">+ Новый чат</button>
+        </div>
+      </aside>
+
+      <!-- Chat Area -->
+      <main class="chat-area">
+        <div id="emptyState" class="empty-state">
+          <div class="empty-icon">💬</div>
+          <p>Выберите чат или создайте новый</p>
+        </div>
+        
+        <div id="chatView" class="chat-view" style="display:none">
+          <div class="chat-header">
+            <div class="chat-info">
+              <div class="avatar" id="chatAvatar"></div>
+              <div>
+                <div class="chat-name" id="chatName"></div>
+                <div class="chat-status" id="chatStatus">онлайн</div>
+              </div>
+            </div>
+            <div class="chat-actions">
+              <button onclick="showChatInfo()" class="icon-btn">ℹ️</button>
+            </div>
+          </div>
+          
+          <div class="messages" id="messages"></div>
+          
+          <div class="chat-input">
+            <button onclick="attachFile()" class="icon-btn">📎</button>
+            <input type="text" id="messageInput" placeholder="Сообщение..." onkeypress="if(event.key==='Enter')sendMessage()">
+            <button onclick="sendMessage()" class="btn-send">Отправить</button>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div id="adminScreen" class="screen">
+    <div class="admin-panel">
+      <div class="admin-header">
+        <h1>Панель администратора</h1>
+        <button onclick="exitAdmin()" class="btn-secondary">Выход</button>
+      </div>
+      
+      <div class="admin-tabs">
+        <button onclick="showAdminTab('users')" class="tab-btn active" data-tab="users">Пользователи</button>
+        <button onclick="showAdminTab('stats')" class="tab-btn" data-tab="stats">Статистика</button>
+        <button onclick="showAdminTab('moderation')" class="tab-btn" data-tab="moderation">Модерация</button>
+      </div>
+      
+      <div id="adminUsers" class="admin-content active">
+        <div class="admin-search">
+          <input type="text" id="adminSearchInput" placeholder="Поиск пользователя" oninput="searchUsers()">
+        </div>
+        <div id="userList" class="user-list"></div>
+      </div>
+      
+      <div id="adminStats" class="admin-content">
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-value" id="totalUsers">0</div>
+            <div class="stat-label">Всего пользователей</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="activeUsers">0</div>
+            <div class="stat-label">Активные</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="verifiedUsers">0</div>
+            <div class="stat-label">Верифицированные</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="premiumUsers">0</div>
+            <div class="stat-label">Premium</div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="adminModeration" class="admin-content">
+        <p>Модерация контента</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
